@@ -1,5 +1,22 @@
+import base64
+import re
+
 import pandas as pd
 import streamlit as st
+
+
+def show_svg(svg, max_width):
+    head, rest = svg.split(">", 1)
+    head = re.sub(r'\sstyle="[^"]*"', "", head)
+    svg = head + ">" + rest
+    if "width=" not in svg.split(">", 1)[0]:
+        w, h = svg.split('viewBox="0 0 ', 1)[1].split('"', 1)[0].split()
+        svg = svg.replace("<svg ", f'<svg width="{w}" height="{h}" ', 1)
+    data = base64.b64encode(svg.encode("utf-8")).decode("ascii")
+    st.markdown(
+        f'<img src="data:image/svg+xml;base64,{data}" style="width:100%;max-width:{max_width}px;height:auto;display:block" alt="">',
+        unsafe_allow_html=True,
+    )
 
 BANNER = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Source Sans Pro, sans-serif" style="width:100%;height:auto;display:block;border-radius:12px">
   <defs>
@@ -51,7 +68,7 @@ BANNER = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-f
   </g>
 </svg>"""
 
-st.html(f'<div style="max-width:640px">{BANNER}</div>')
+show_svg(BANNER, 640)
 st.subheader("Floor plan")
 st.write(
     "Concept layout for the two-floor, roughly 3,000 sq ft building. Gaps in walls "
@@ -172,7 +189,7 @@ svg = (
     + "</svg>"
 )
 
-st.html(f'<div style="max-width:900px;margin:0 auto">{svg}</div>')
+show_svg(svg, 900)
 
 st.subheader("Space plan")
 zones = pd.DataFrame(
