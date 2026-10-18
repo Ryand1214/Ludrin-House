@@ -1,7 +1,58 @@
 import pandas as pd
 import streamlit as st
 
-st.title("Ludrin House Floor Plan")
+BANNER = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="Source Sans Pro, sans-serif" style="width:100%;height:auto;display:block;border-radius:12px">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1117"/><stop offset="1" stop-color="#1a2233"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <text x="40" y="70" font-size="14" fill="#60a5fa" font-weight="bold" letter-spacing="2">PROJECT HUB</text>
+  <text x="40" y="128" font-size="44" fill="#f3f4f6" font-weight="bold">Ludrin</text>
+  <text x="40" y="178" font-size="44" fill="#f3f4f6" font-weight="bold">House</text>
+  <text x="40" y="218" font-size="15" fill="#9aa0a6">TCG shop, play hall,</text>
+  <text x="40" y="240" font-size="15" fill="#9aa0a6">PC room and kitchen</text>
+  <g font-size="12" fill="#cbd5e1">
+    <rect x="40" y="276" width="118" height="30" rx="15" fill="none" stroke="#60a5fa"/>
+    <text x="99" y="296" text-anchor="middle">Business model</text>
+    <rect x="168" y="276" width="96" height="30" rx="15" fill="none" stroke="#60a5fa"/>
+    <text x="216" y="296" text-anchor="middle">Floor plan</text>
+  </g>
+  
+  <g transform="translate(330,48)" stroke="#6b7280" fill="none" stroke-width="1.5">
+    <text x="0" y="0" font-size="11" fill="#9aa0a6" stroke="none">Ground floor</text>
+    <rect x="0" y="10" width="270" height="110" rx="4"/>
+    <line x1="95" y1="10" x2="95" y2="120"/>
+    <rect x="8" y="22" width="5" height="88" fill="rgba(96,165,250,0.25)"/>
+    <rect x="20" y="30" width="40" height="8" rx="2"/><rect x="20" y="46" width="40" height="8" rx="2"/><rect x="20" y="62" width="40" height="8" rx="2"/>
+    <rect x="64" y="18" width="24" height="22" rx="3" stroke="#60a5fa" fill="rgba(96,165,250,0.15)"/>
+    <g>
+      <rect x="108" y="28" width="22" height="11" rx="2"/><rect x="140" y="28" width="22" height="11" rx="2"/><rect x="172" y="28" width="22" height="11" rx="2"/><rect x="204" y="28" width="22" height="11" rx="2"/>
+      <rect x="108" y="50" width="22" height="11" rx="2"/><rect x="140" y="50" width="22" height="11" rx="2"/><rect x="172" y="50" width="22" height="11" rx="2"/><rect x="204" y="50" width="22" height="11" rx="2"/>
+      <rect x="108" y="72" width="22" height="11" rx="2"/><rect x="140" y="72" width="22" height="11" rx="2"/><rect x="172" y="72" width="22" height="11" rx="2"/><rect x="204" y="72" width="22" height="11" rx="2"/>
+      <rect x="236" y="28" width="26" height="6" fill="rgba(96,165,250,0.25)"/>
+      <line x1="120" y1="100" x2="210" y2="100" stroke-width="3"/>
+    </g>
+    <line x1="30" y1="120" x2="70" y2="120" stroke="#60a5fa" stroke-width="3"/>
+    <text x="0" y="148" font-size="11" fill="#9aa0a6" stroke="none">Second floor</text>
+    <rect x="0" y="158" width="270" height="110" rx="4"/>
+    <line x1="175" y1="158" x2="175" y2="268"/>
+    <rect x="64" y="166" width="24" height="22" rx="3" stroke="#60a5fa" fill="rgba(96,165,250,0.15)"/>
+    <g>
+      <rect x="10" y="200" width="14" height="10" rx="2"/><rect x="30" y="200" width="14" height="10" rx="2"/><rect x="50" y="200" width="14" height="10" rx="2"/><rect x="70" y="200" width="14" height="10" rx="2"/><rect x="90" y="200" width="14" height="10" rx="2"/><rect x="110" y="200" width="14" height="10" rx="2"/><rect x="130" y="200" width="14" height="10" rx="2"/><rect x="150" y="200" width="14" height="10" rx="2"/>
+      <rect x="10" y="218" width="14" height="10" rx="2"/><rect x="30" y="218" width="14" height="10" rx="2"/><rect x="50" y="218" width="14" height="10" rx="2"/><rect x="70" y="218" width="14" height="10" rx="2"/><rect x="90" y="218" width="14" height="10" rx="2"/><rect x="110" y="218" width="14" height="10" rx="2"/><rect x="130" y="218" width="14" height="10" rx="2"/><rect x="150" y="218" width="14" height="10" rx="2"/>
+      <line x1="14" y1="246" x2="40" y2="246" stroke-width="3"/><line x1="54" y1="246" x2="80" y2="246" stroke-width="3"/><line x1="94" y1="246" x2="120" y2="246" stroke-width="3"/><line x1="134" y1="246" x2="160" y2="246" stroke-width="3"/>
+    </g>
+    <rect x="183" y="170" width="80" height="12" rx="2" fill="rgba(96,165,250,0.25)"/>
+    <rect x="183" y="192" width="80" height="8" rx="2"/>
+    <rect x="183" y="210" width="36" height="28" rx="2"/><rect x="227" y="210" width="36" height="28" rx="2"/>
+    <line x1="175" y1="244" x2="175" y2="262" stroke="#60a5fa" stroke-width="3"/>
+  </g>
+</svg>"""
+
+st.html(f'<div style="max-width:640px">{BANNER}</div>')
+st.subheader("Floor plan")
 st.write(
     "Concept layout for the two-floor, roughly 3,000 sq ft building. Gaps in walls "
     "are open walkways, and customers never pass through the kitchen. Furniture is not to scale."
